@@ -1,7 +1,7 @@
 ---
 # defaults file for ansible-role-nfs
 nfs_client_use: no
-nfs_servier_mode: no
+nfs_server_mode: no
 nfs_exports_path:
   - '/exports/data'
 nfs_exports_list:

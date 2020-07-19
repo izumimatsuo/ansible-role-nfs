@@ -1,4 +1,4 @@
-# ansible-role-nfs
+# ansible-role-nfs [![Build Status](https://travis-ci.org/izumimatsuo/ansible-role-nfs.svg?branch=master)](https://travis-ci.org/izumimatsuo/ansible-role-nfs)
 
 CentOS 7 に nfs を導入する ansible role です。
 

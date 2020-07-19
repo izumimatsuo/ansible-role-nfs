@@ -1,0 +1,61 @@
+---
+# tasks file for ansible-role-nfs
+- name: install nfs package
+  yum:
+    name:
+      - nfs-utils
+
+- name: create exports base directory
+  file:
+    path: /exports
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+  when: nfs_server_mode
+
+- name: create exports data directory
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: nfsnobody
+    group: nfsnobody
+    mode: '0755'
+  with_items: '{{ nfs_exports_path }}'
+  when: nfs_server_mode
+
+- name: create exports conf
+  template:
+    src: exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nfs-server service
+  when: nfs_server_mode
+
+- name: start nfs-server service
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
+  when: nfs_server_mode
+
+- name: create nfs mount directory
+  file:
+    path: '{{ item }}'
+    state: directory
+    owner: nfsnobody
+    group: nfsnobody
+    mode: '0755'
+  with_items: '{{ nfs_mount_path }}'
+  when: not nfs_server_mode or nfs_client_use
+
+- name: mount nfs remote directory
+  mount:
+    path: '{{ item.path }}'
+    src: '{{ item.src }}'
+    fstype: 'nfs4'
+    state: mounted
+  with_items: '{{ nfs_mount_list }}'
+  when: not nfs_server_mode or nfs_client_use

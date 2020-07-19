@@ -1,0 +1,3 @@
+{% for item in nfs_exports_list %}
+{{ item.path }} {{ item.ipaddr }}(rw,all_squash)
+{% endfor %}

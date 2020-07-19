@@ -1,0 +1,12 @@
+---
+# defaults file for ansible-role-nfs
+nfs_client_use: no
+nfs_servier_mode: no
+nfs_exports_path:
+  - '/exports/data'
+nfs_exports_list:
+  - { path: '/exports/data', ipaddr: '127.0.0.1' }
+nfs_mount_path:
+  - '/mnt/data'
+nfs_mount_list:
+  - { path: '/mnt/data', src: '127.0.0.1:/exports/data' }

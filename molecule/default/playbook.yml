@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    - nfs_server_mode: yes
+  roles:
+    - role: ansible-role-nfs
